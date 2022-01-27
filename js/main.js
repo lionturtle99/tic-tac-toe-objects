@@ -20,5 +20,26 @@ function Player(mark, name) {
   this.name = name;
 }
 
+Game.prototype.addPlayer = function(player)  {
+  this.players[player.mark] = player;
+}
+
+
+
+
+let myBoard = new Board();
+let myGame = new Game(myBoard);
+let player1 = new Player("x","Liam");
+let player2 = new Player("o","Daniel");
+myGame.addPlayer(player1);
+myGame.addPlayer(player2);
+
+console.log(myBoard);
+console.log(myGame);
+
+
+
+
+
 
 
