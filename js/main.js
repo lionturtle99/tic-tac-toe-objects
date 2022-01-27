@@ -1,10 +1,10 @@
 function Board () {
   this.spot1 = false;
-  this.spot2 = "o";
-  this.spot3 = "x";
+  this.spot2 = false;
+  this.spot3 = false;
   this.spot4 = false;
-  this.spot5 = "o";
-  this.spot6 = "x";
+  this.spot5 = false;
+  this.spot6 = false;
   this.spot7 = false;
   this.spot8 = false;
   this.spot9 = false;
@@ -13,6 +13,7 @@ function Board () {
 function Game (board) {
   this.board = board;
   this.players = {};
+  this.activePlayer = "x";
 }
 
 function Player(mark, name) {
@@ -27,6 +28,7 @@ Game.prototype.addPlayer = function(player)  {
 
 
 Board.prototype.checkForWinner = function(currentPlayer) {
+  console.log("current player is " + currentPlayer);
   for (const spot in myBoard) {
     if (myBoard.hasOwnProperty(spot)) {
       //console.log(spot + ": " + myBoard[spot]);
@@ -74,6 +76,18 @@ Board.prototype.checkForWinner = function(currentPlayer) {
   }  
 }
 
+// Board.prototype.noOneWins = function() {
+//   for (const spot in myBoard) {
+//     if (myBoard.hasOwnProperty(spot)) {
+//       if (myBoard[spot] === false) {
+//         return false;
+//       } else{
+//         return true;
+//       }
+//     }
+//   }
+// }
+
 
 
 let myBoard = new Board();
@@ -83,8 +97,53 @@ let player2 = new Player("o","Daniel");
 myGame.addPlayer(player1);
 myGame.addPlayer(player2);
 
-// console.log(myBoard);
-// console.log(myGame);
-
 myBoard.checkForWinner("x");
 myBoard.checkForWinner("o");
+
+
+$(document).ready(function () {
+  for (let i = 1; i <= 9; i++) {
+    $("#spot-" + i).on("click", function() {
+      if (myGame.activePlayer === "x") {
+        if (myBoard["spot" + i] === false) {
+          $("#spot-" + i + "-mark").html("x");
+          myBoard["spot" + i] = "x";
+          myBoard.checkForWinner(myGame.activePlayer);
+          if ((myBoard.checkForWinner(myGame.activePlayer)) !== false) {
+            $("#mark").html(myGame.activePlayer);
+            $("#board").fadeOut(500);
+            $(".result").fadeIn(500);
+            $(".result").fadeOut(5000, function() {
+              location.reload(true);
+            });
+          }
+          myGame.activePlayer = "o"; //switch player
+        } else {
+        alert("Someone has already taken this spot")
+        }
+      } else { //if player is o
+        if (myBoard["spot" + i] === false) {
+          $("#spot-" + i + "-mark").html("o");
+          myBoard["spot" + i] = "o";
+          myBoard.checkForWinner(myGame.activePlayer); 
+          if ((myBoard.checkForWinner(myGame.activePlayer)) !== false) {
+            $("#mark").html(myGame.activePlayer);
+            $("#board").fadeOut(500);
+            $(".result").fadeIn(500);
+            $(".result").fadeOut(5000, function() {
+              location.reload(true);
+            });
+
+          }
+          myGame.activePlayer = "x";
+        } else {
+          alert("Someone has already taken this spot")
+        }
+      }
+      // if (myBoard.noOneWins() === true) {
+      //   alert("No one wins");
+      //   setTimeout(location.reload(true), 5000);
+      // }
+    });
+  }
+});

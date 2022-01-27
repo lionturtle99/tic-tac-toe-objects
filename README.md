@@ -22,15 +22,6 @@ Code:
 let game = new Game(board)
 Expected Output: Game{board: players:}
 
-### Describe Game.prototype.addBoards();  
-Test: "It should create an object with the correct properties."  
-
-Code:  
-game.prototype.addBoards(board) {
-  this.board["board"] = board;
-}
-Expected Output: Game.board[array of positions]
-
 
 ### Describe Player();  
 Test: "It should create an object with the correct properties."  
@@ -70,8 +61,8 @@ Expected Output: board{1: false, 2: "o", 3: false, 4: false, 5: false, 6: "x", 7
 
 
 ### Describe Board.prototype.checkForWinner();  
-Test: "It should loop through an array and use a switch conditional to check for a winner"  
+Test: "It should loop through the key values of an object and use a switch conditional to check for a winner"  
 
 Code:  
-let result = board.checkForWinner()
-Expected Output: false / 3,4,5
+let result = board.checkForWinner("x")
+Expected Output: x: 3,4,5

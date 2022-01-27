@@ -1,0 +1,17 @@
+.game-spot {
+  height: 250px;
+  width: 250px;
+  font-size: 70px;
+}
+
+#board {
+  border: none;
+}
+.result {
+  display: none;
+  font-size: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
